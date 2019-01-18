@@ -1,4 +1,4 @@
 *.gif
 *.pyc
 *.txt
-*.POWERHOUSE
+events.out.tfevents.*
