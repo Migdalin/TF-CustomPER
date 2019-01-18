@@ -15,10 +15,12 @@ class MemoryBase:
     
     def GetFramesForState(self, stateId):
         raise NotImplementedError
+  
+    def GetFramesForLatestEpisode(self):
+        raise NotImplementedError
 
     def OnEpisodeStart(self):
         pass
         
     def OnEpisodeOver(self, totalReward):
         pass
-    

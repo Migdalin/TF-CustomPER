@@ -11,7 +11,6 @@ From:
 class GifSaver:
     def __init__(self, memory, agent, save_every_x_episodes):
         self.episode_counter = 0
-        self.previous_episode_end = 0
         self.save_every_x_episodes = save_every_x_episodes
         self.memory = memory
         self.agent = agent
@@ -23,29 +22,21 @@ class GifSaver:
         if (self.episode_counter >= self.save_every_x_episodes):
             self._CreateGif()
             self.episode_counter = 0
-        self.previous_episode_end = self.memory.MaxFrameId
 
     def _CreateGif(self):
         frames = self._CollectFramesForGif()
-        self._GenerateGif(self._GetStartFrameId(), frames)
+        self._GenerateGif(frames[0].id, frames)
         
-    def _GetStartFrameId(self):
-        return self.previous_episode_end + 1
-            
     def _CollectFramesForGif(self):
-        startFrameId = self._GetStartFrameId()
-        maxFrameId = self.memory.MaxFrameId
-        framesForGif = []
-        for id in range(startFrameId, maxFrameId+1):
-            framesForGif.append(self.memory.Frames[id].Contents)
-        return framesForGif
+        frameContents = self.memory.GetFramesForLatestEpisode()
+        return frameContents
             
-    def _GenerateGif(self, frame_number, frames_for_gif):
-        for idx, frame_idx in enumerate(frames_for_gif): 
-            frames_for_gif[idx] = resize(frame_idx, (420, 320),
+    def _GenerateGif(self, gifName, frames_for_gif):
+        for idx, frame_obj in enumerate(frames_for_gif): 
+            frames_for_gif[idx] = resize(frame_obj.Contents, (420, 320),
                           mode='constant',
                           preserve_range=True, order=0).astype(np.uint8)
         
-        imageio.mimsave(f'{self.outputDir}/{frame_number}.gif', 
+        imageio.mimsave(f'{self.outputDir}/{gifName}.gif', 
                         frames_for_gif, duration=1/15)
         

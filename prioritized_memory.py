@@ -68,3 +68,10 @@ class PrioritizedMemory(MemoryBase):
     def GetFramesForState(self, stateId):
         episode = self.FindEpisodeContainingFrame(stateId)
         return episode.GetFramesForState(stateId)
+
+    def GetFramesForLatestEpisode(self):
+        frames = []
+        for frameId in range(self.ActiveEpisode.MinFrameId, self.ActiveEpisode.MaxFrameId+1):
+            frames.append(self.ActiveEpisode.Frames[frameId])
+        return frames
+

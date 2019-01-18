@@ -13,6 +13,7 @@ from DataModel.progress_tracker import ProgressTracker, ProgressTrackerParms
 from DataModel.hyper_parameters import StandardAgentParameters
 from DataModel.hyper_parameters import ShortEpisodeParameters, LongEpisodeParameters
 from DataModel.hyper_parameters import ShortPrioritizedParameters, LongPrioritizedParameters
+from DataModel.hyper_parameters import TestGifGeneratorPrioritized
 
 
 '''

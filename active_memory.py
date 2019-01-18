@@ -14,6 +14,7 @@ class ActiveMemory(MemoryBase):
         self.FramesPerState = DdqnGlobals.FRAMES_PER_STATE
         self.MaxFrameId = 0  # We add new frames based on this
         self.MinFrameId = 1  # We remove old frames based on this
+        self.LatestEpisodeFirstFrameId = 0
 
     def Forget(self):
         unusedFrameId = 0
@@ -62,4 +63,16 @@ class ActiveMemory(MemoryBase):
         
         frameStack = np.concatenate(tempTuple, axis=-1)
         return Normalize(frameStack)
+
+    def OnEpisodeStart(self):
+        self.LatestEpisodeFirstFrameId = self.MaxFrameId
+        
+    def GetFramesForLatestEpisode(self):
+        frames = []
+        for id in range(self.LatestEpisodeFirstFrameId, self.MaxFrameId+1):
+            frames.append(self.Frames[id])
+        return frames
+        
+
+
 

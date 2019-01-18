@@ -46,3 +46,6 @@ LongEpisodeParameters = MiscParameters(createGifEveryXEpisodes=100, usePrioritiz
 
 ShortPrioritizedParameters = MiscParameters(createGifEveryXEpisodes=500, usePrioritizedReplay=True)
 LongPrioritizedParameters = MiscParameters(createGifEveryXEpisodes=100, usePrioritizedReplay=True)
+
+TestGifGeneratorPrioritized = MiscParameters(createGifEveryXEpisodes=10, usePrioritizedReplay=True)
+
